@@ -129,9 +129,11 @@
   <ItemGroup>
     <ClCompile Include="Customer.cpp" />
     <ClCompile Include="DLLImplementation-GuideLine-Version.cpp" />
+    <ClCompile Include="LinkedList.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Customer.h" />
+    <ClInclude Include="LinkedList.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
