@@ -12,6 +12,8 @@ private:
 	Customer* prev;
 	Customer* next;
 public:
+	Customer(int, std::string, std::string, double, double);
+	Customer();
 	int getId();
 	std::string getFirst();
 	std::string getLast();
