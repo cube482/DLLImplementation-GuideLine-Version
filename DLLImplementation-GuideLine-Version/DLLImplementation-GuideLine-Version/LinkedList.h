@@ -7,7 +7,7 @@ private:
 	Customer* start;
 public:
 	struct CustomerList {
-		Customer** list;
+		Customer** list = nullptr;
 		int size = 0;
 	};
 	Customer* getStart();
@@ -15,8 +15,11 @@ public:
 	bool isEmpty();
 	bool addCustomer(Customer*);
 	void printRecord(Customer*);
-	void printRecordMult(Customer**, int);
+	void printRecordMult(CustomerList*);
+	bool deleteRecord(int);
+	void clearList();
 	Customer* searchById(int);
+	CustomerList* allRecords();
 	CustomerList* searchByFirst(std::string);
 	CustomerList* searchByLast(std::string);
 };
