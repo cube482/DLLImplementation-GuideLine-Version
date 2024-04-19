@@ -104,17 +104,19 @@ void LinkedList::printRecord(Customer* customer) {
 }
 
 void LinkedList::printRecordMult(LinkedList::CustomerList* customerList) {
-	std::cout << "****************************************************************************************************************" << std::endl;
 	if (customerList == nullptr) {
 		return;
 	}
-	for (int i = 0; i < customerList->size; i++) {
-		Customer* customer = customerList->list[i];
-		std::cout << "|Customer ID: " << std::right << std::setw(8) << customer->getId() << " | " << std::left << "Customer Name:" << std::right << std::setw(23) <<
-		customer->getFirst() + " , " + customer->getLast() << " | " << std::left << "Balance: " << std::right << "$" << std::fixed << std::setprecision(2) << std::setw(12) <<
-		customer->getBalance() << " | " << std::left << "Bonus: " << std::right << "$" << std::fixed << std::setprecision(2) << std::setw(12) << customer->getBonus() << " |" << std::endl;
+	else {
+		std::cout << "****************************************************************************************************************" << std::endl;
+		for (int i = 0; i < customerList->size; i++) {
+			Customer* customer = customerList->list[i];
+			std::cout << "|Customer ID: " << std::right << std::setw(8) << customer->getId() << " | " << std::left << "Customer Name:" << std::right << std::setw(23) <<
+				customer->getFirst() + " , " + customer->getLast() << " | " << std::left << "Balance: " << std::right << "$" << std::fixed << std::setprecision(2) << std::setw(12) <<
+				customer->getBalance() << " | " << std::left << "Bonus: " << std::right << "$" << std::fixed << std::setprecision(2) << std::setw(12) << customer->getBonus() << " |" << std::endl;
+		}
+		std::cout << "****************************************************************************************************************" << std::endl;
 	}
-	std::cout << "****************************************************************************************************************" << std::endl;
 }
 
 bool LinkedList::deleteRecord(int id) {
@@ -221,6 +223,7 @@ LinkedList::CustomerList* LinkedList::searchByFirst(std::string first) {
 		ret->size++;
 	}
 	if (ret->size == 0) {
+		std::cout << "\nCustomer not found!\n" << std::endl;
 		return nullptr;
 	}
 	else {
@@ -251,6 +254,7 @@ LinkedList::CustomerList* LinkedList::searchByLast(std::string last) {
 		ret->size++;
 	}
 	if (ret->size == 0) {
+		std::cout << "\nCustomer not found!\n" << std::endl;
 		return nullptr;
 	}
 	else {
