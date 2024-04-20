@@ -2,7 +2,7 @@
 #include "LinkedList.h"
 
 // function prototypes
-LinkedList* createLinkedList(LinkedList*);
+void createLinkedList(LinkedList*&);
 void addCustomer(LinkedList*);
 void editCustomer(LinkedList*);
 void deleteCustomer(LinkedList*);
@@ -10,6 +10,7 @@ void searchCustomer(LinkedList*);
 void displayCustomer(LinkedList*);
 void clearLinkedList(LinkedList*);
 void endProgram(bool*);
+void populateTestData(LinkedList*);
 int validInt();
 int validId();
 double validDouble();
@@ -20,76 +21,50 @@ std::string validName();
 
 // main
 int main() {
-	//LinkedList* LL = nullptr; // Linked List pointer to be allocated dynamically during runtime
 	LinkedList* LL = nullptr;
 	bool run = true;
 	while (run) {
-		if (LL != nullptr && LL->getStart() != nullptr) {
-			std::cout << "==== Main Menu ====\n" << std::endl;
-			std::cout << "1. Add Customer to Linked List\n" <<
-				"2. Edit Customer Information\n" <<
-				"3. Delete Customer from Linked List\n" <<
-				"4. Search for Customer\n" <<
-				"5. Display all Customers\n" <<
-				"6. Clear Linked List\n" <<
-				"7. End Program\n" << std::endl;
-			switch (validInt()) {
-			case 1: 
-				addCustomer(LL);
-				break;
-			case 2:
-				editCustomer(LL);
-				break;
-			case 3:
-				deleteCustomer(LL);
-				break;
-			case 4:
-				searchCustomer(LL);
-				break;
-			case 5:
-				displayCustomer(LL);
-				break;
-			case 6:
-				clearLinkedList(LL);
-				break;
-			case 7:
-				endProgram(&run);
-				break;
-			default:
-				std::cout << "\nInvalid Choice!\n" << std::endl;
-			}
-		}
-		else if (LL != nullptr) {
-			std::cout << "==== Main Menu ====\n" << std::endl;
-			std::cout << "1. Add Customer to Linked List\n" <<
-				"2. End Program\n" << std::endl;
-			switch (validInt()) {
-			case 1:
-				addCustomer(LL);
-				break;
-			case 2:
-				endProgram(&run);
-				break;
-			default:
-				std::cout << "\nYou should try adding customers to the linked list before other operations are available!\n" << std::endl;
-				break;
-			}
-		}
-		else if (LL == nullptr){
-			std::cout << "==== Main Menu ====\n" << std::endl;
-			std::cout << "1. Create Linked List\n" <<
-				"2. End Program\n" << std::endl;
-			switch (validInt()) {
-			case 1:
-				LL = createLinkedList(LL);
-				break;
-			case 2:
-				endProgram(&run);
-				break;
-			default:
-				std::cout << "\nLinked List not created! Create a linked list before attempting other operations!\n" << std::endl;
-				break;
-			}
+		std::cout << "\n== Main Menu ===\n" << std::endl;
+		std::cout << "1. Create linked list\n" <<
+			"2. Add Customer\n" <<
+			"3. Edit Customer Info\n" <<
+			"4. Delete Customer\n" <<
+			"5. Search for Customer\n" <<
+			"6. List all customers\n" <<
+			"7. Clear linked list\n" <<
+			"8. Close Program\n" <<
+			"9. Populate with test data\n" << std::endl;
+		int choice = validInt();
+		switch (choice) {
+		case 1:
+			createLinkedList(LL);
+			break;
+		case 2:
+			addCustomer(LL);
+			break;
+		case 3:
+			editCustomer(LL);
+			break;
+		case 4:
+			deleteCustomer(LL);
+			break;
+		case 5:
+			searchCustomer(LL);
+			break;
+		case 6:
+			displayCustomer(LL);
+			break;
+		case 7:
+			clearLinkedList(LL);
+			break;
+		case 8:
+			endProgram(&run);
+			break;
+		case 9:
+			populateTestData(LL);
+			break;
+		default:
+			std::cout << "\nInvalid Choice!\n" << std::endl;
 		}
 	}
 }
@@ -149,12 +124,16 @@ InvalidName:
 // end Helper Functions
 
 // Main Functions
-LinkedList* createLinkedList(LinkedList* LL) {
-	LinkedList* ret = new LinkedList();
-	return ret;
+void createLinkedList(LinkedList*& LL) {
+	LL = new LinkedList();
+	std::cout << "\nLinked list created!\n" << std::endl;
 }
 
 void addCustomer(LinkedList* LL) {
+	if (LL == nullptr) {
+		std::cout << "\nLinked list not created yet!\n" << std::endl;
+		return;
+	}
 	std::cout << "\n== New Customer Creation ==\n" << std::endl;
 	std::cout << "Enter Customer ID:\n" << std::endl;
 	int id = validId();
@@ -176,6 +155,10 @@ void addCustomer(LinkedList* LL) {
 }
 
 void editCustomer(LinkedList* LL) {
+	if (LL == nullptr || LL->getStart() == nullptr) {
+		std::cout << "\nLinked list empty or not created yet!\n" << std::endl;
+		return;
+	}
 	std::cout << "=== Customer Edit ===\n" << std::endl;
 	std::cout << "Enter ID of the customer whose data you wish to edit:\n" << std::endl;
 	Customer* customer = LL->searchById(validId());
@@ -218,6 +201,10 @@ void editCustomer(LinkedList* LL) {
 }
 
 void deleteCustomer(LinkedList* LL) {
+	if (LL == nullptr || LL->getStart() == nullptr) {
+		std::cout << "\nLinked list empty or not created yet!\n" << std::endl;
+		return;
+	}
 	std::cout << "\nEnter the ID of the customer whose record you wish to delete:\n" << std::endl;
 	if (LL->deleteRecord(validId())) {
 		std::cout << "\nRecord deleted successfully!\n" << std::endl;
@@ -228,6 +215,10 @@ void deleteCustomer(LinkedList* LL) {
 }
 
 void searchCustomer(LinkedList* LL) {
+	if (LL == nullptr || LL->getStart() == nullptr) {
+		std::cout << "\nLinked list empty or not created yet!\n" << std::endl;
+		return;
+	}
 	std::cout << "\n=== Customer Search ===\n" << std::endl;
 	std::cout << "1. Search by ID\n" << 
 				 "2. Search by first name\n" <<
@@ -255,10 +246,18 @@ void searchCustomer(LinkedList* LL) {
 }
 
 void displayCustomer(LinkedList* LL) {
+	if (LL == nullptr || LL->getStart() == nullptr) {
+		std::cout << "\nLinked list empty or not created yet!\n" << std::endl;
+		return;
+	}
 	LL->printRecordMult(LL->allRecords());
 }
 
 void clearLinkedList(LinkedList* LL) {
+	if (LL == nullptr || LL->getStart() == nullptr) {
+		std::cout << "\nLinked list empty or not created yet!\n" << std::endl;
+		return;
+	}
 	LL->clearList();
 }
 
@@ -266,6 +265,16 @@ void endProgram(bool* run) {
 	*run = false;
 }
 
+void populateTestData(LinkedList* LL) {
+	if (LL == nullptr) {
+		std::cout << "\nLinked list not created yet!\n" << std::endl;
+		return;
+	}
+	for (int i = 0; i < 20; i++) {
+		LL->addCustomer(new Customer(i+1, "Test" + std::to_string(i+1), "TestLast" + std::to_string(i+1), i * 1000, i * 100));
+	}
+	std::cout << "\nLinked list populated with test data\n" << std::endl;
+}
 
 
 // end main functions
